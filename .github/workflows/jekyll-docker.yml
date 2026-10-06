@@ -1,20 +1,38 @@
-name: Jekyll site CI
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Build the site in the jekyll/builder container
-      run: |
-        docker run \
-        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bangladesh Penalty</title>
+<style>
+body{margin:0;background:#0a3d0a;color:white;text-align:center;font-family:sans-serif}
+#goal{width:300px;height:180px;border:5px solid white;margin:80px auto 20px;position:relative;background:rgba(255,255,255,0.2)}
+#keeper{width:50px;height:70px;background:yellow;position:absolute;left:125px;top:55px;transition:0.4s;border-radius:10px}
+#ball{width:60px;height:60px;background:white;border-radius:50%;position:absolute;bottom:200px;left:170px;transition:0.5s;border:3px solid black}
+#shoot{padding:18px 70px;font-size:24px;background:#00ff00;border:none;border-radius:15px;font-weight:bold}
+</style>
+</head>
+<body>
+<h2>BANGLADESH 0:0 BRAZIL</h2>
+<div id="goal"><div id="keeper"></div></div>
+<div id="ball"></div>
+<br><br><br><br><br>
+<button id="shoot">SHOOT ⚽</button>
+<p id="msg">Tap SHOOT!</p>
+<script>
+let ban=0;
+let keeper=document.getElementById('keeper');
+let ball=document.getElementById('ball');
+let msg=document.getElementById('msg');
+document.getElementById('shoot').onclick=()=>{
+ let g=Math.random()*250;
+ let k=Math.random()*250;
+ ball.style.bottom="400px"; ball.style.left=g+"px";
+ keeper.style.left=k+"px";
+ setTimeout(()=>{
+   if(Math.abs(g-k)>50){msg.innerText="GOAL! 🇧🇩";}else{msg.innerText="SAVED!";}
+   setTimeout(()=>{ball.style.bottom="200px";ball.style.left="170px";msg.innerText="Tap SHOOT!";},1000);
+ },500);
+}
+</script>
+</body>
+</html>
